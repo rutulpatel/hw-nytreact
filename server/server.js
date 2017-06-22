@@ -20,7 +20,7 @@ mongoose.Promise = Promise;
 var Article = require("./models/Article.js");
 var Note = require("./models/Note.js");
 
-mongoose.connection("mongodb://localhost/nytreact");
+mongoose.connect("mongodb://localhost/nytreact");
 var db = mongoose.connection;
 
 db.on("error", function(err) {
@@ -45,3 +45,6 @@ app.get('/*', function(){
 app.listen(PORT, function() {
   console.log("App listening on PORT: " + PORT);
 });
+
+
+module.exports.app;
