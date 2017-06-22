@@ -9,7 +9,7 @@ class Results extends Component {
   }
 
   articleClicked = (article) => {
-    
+    this.props.selectedArticle(article);
     console.log(article);
   }
 
@@ -17,7 +17,7 @@ class Results extends Component {
       return this.props.searchResults.map(
           (article) => {
             return (
-            <Panel className="show-grid text-left" key={article.id} >
+            <Panel className="show-grid text-left" key={article.nytid} >
               <Col xs={10} bsSize="small">
                 {article.title}
               </Col>
