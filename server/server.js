@@ -9,6 +9,8 @@ var app = express();
 // Sets an initial port. We'll use this later in our listener
 var PORT = process.env.PORT || 3001;
 
+var api = require('./api/');
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.text());
@@ -33,13 +35,7 @@ db.once("open", function(){
 
 app.use(express.static("./build"));
 
-app.get('/api', function(req, res){
-  res.json('It worked!!!!')
-})
-
-app.get('/*', function(){
-    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-})
+app.use("/", api);
 
 // Starting our express server
 app.listen(PORT, function() {
