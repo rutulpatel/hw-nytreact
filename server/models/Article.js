@@ -7,7 +7,7 @@ var ArticleSchema = new Schema({
     type: String,
     required: true
   },
-  web_url: {
+  link: {
     type: String,
     required: true
   },
