@@ -35,7 +35,11 @@ db.once("open", function(){
 
 app.use(express.static("./build"));
 
-app.use("/", api);
+app.use("/api/", api);
+
+app.get('/*', function(){
+    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
+})
 
 // Starting our express server
 app.listen(PORT, function() {

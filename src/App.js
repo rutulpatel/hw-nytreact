@@ -10,7 +10,8 @@ class App extends Component {
     super(props);
 
     this.state = {
-      searchResults: []
+      searchResults: [],
+      savedArticles: []
     };
   }
 
@@ -26,14 +27,32 @@ class App extends Component {
 
   saveArticle = articleObj => {
     axios
-      .post("/saved", articleObj)
-      .then((response) => {
+      .post("/api/saved", articleObj)
+      .then(response => {
         console.log(response);
+        this.pullSavedArticles().bind(this);
       })
       .catch(err => {
         console.log(err);
       });
   };
+
+  pullSavedArticles = () => {
+    axios
+      .get("/api/saved")
+      .then(response => {
+        console.log(response.data);
+        this.setState({ savedArticles: response.data });        
+        return response;
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
+
+  componentDidMount = () => {
+    this.pullSavedArticles();
+  }
 
   render() {
     return (
@@ -46,8 +65,11 @@ class App extends Component {
           <h4>Search articles and saved the ones that interests you.</h4>
         </div>
         <Search searchResults={this.saveSearchResults} />
-        <Results searchResults={this.state.searchResults} selectedArticle={this.saveArticle} />
-        <SavedArticles />
+        <Results
+          searchResults={this.state.searchResults}
+          selectedArticle={this.saveArticle}
+        />
+        <SavedArticles savedArticles={this.state.savedArticles} />
       </div>
     );
   }

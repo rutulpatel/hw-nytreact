@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import { Panel, Grid, Row, Col, Button } from "react-bootstrap";
+import { Panel, Grid, Col, Button } from "react-bootstrap";
 
 class Results extends Component {
   constructor(props) {

@@ -6,14 +6,20 @@ var request = require("request");
 var Article = require("../models/Article");
 var Note = require("../models/Note");
 
-router.get('/api', function(req, res){
+router.get('/', function(req, res){
   res.json('It worked, whaattt!!!!')
-})
+});
 
-router.get('/*', function(){
-    res.sendFile(path.resolve(__dirname, '..', 'build', 'index.html'));
-})
-
+router.get('/saved', function(req, res) {
+  Article.find({}, function(err, doc) {
+    if(err) {
+      console.log(err);
+    } else {
+      console.log(doc);
+      res.json(doc);
+    }
+  });
+});
 
 // POST METHODS
 router.post("/saved", function(req, res) {
