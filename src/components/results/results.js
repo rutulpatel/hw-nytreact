@@ -9,19 +9,20 @@ class Results extends Component {
   }
 
   articleClicked = (article) => {
-    alert(article);
+    
+    console.log(article);
   }
 
   renderResults() {
       return this.props.searchResults.map(
           (article) => {
             return (
-            <Panel className="show-grid text-left" key={article.date} onClick={() => this.articleClicked(article)}>
+            <Panel className="show-grid text-left" key={article.id} >
               <Col xs={10} bsSize="small">
                 {article.title}
               </Col>
               <Col xs={2}>
-                <Button bsSize="small" bsStyle="primary">
+                <Button bsSize="small" bsStyle="primary" onClick={() => this.articleClicked(article)}>
                   Save
                 </Button>
               </Col>

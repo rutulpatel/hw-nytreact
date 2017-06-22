@@ -3,6 +3,7 @@ import "react-bootstrap";
 import Results from './components/results/results';
 import SavedArticles from './components/savedArticles/savedArticles';
 import Search from './components/search/search';
+import axios from 'axios';
 
 
 class App extends Component {
@@ -19,9 +20,16 @@ class App extends Component {
     this.setState({searchResults: articles});
   }
 
+  handleRequest = () => {
+    axios.get('/api').then((response)=>{
+      console.log(response.data);
+    })
+  }
+
   render() {
     return (
       <div className="App">
+        <button onClick={this.handleRequest}>Test</button>
         <div className="page-header text-center">
           <h1 className="text-underline">
             <u>New York Time Article Scrubber</u>

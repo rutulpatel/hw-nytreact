@@ -27,46 +27,69 @@ class Search extends Component {
 
     this.state = {
       topic: "",
-      startYear: "",
-      endYear: ""
+      startDate: "",
+      endDate: ""
     };
   }
 
   handleValueChange = e => {
-    this.setState({ [e.target.name]: e.target.value }, () => {
-      console.log(this.state);
-    });
+    this.setState({ [e.target.name]: e.target.value });
   };
 
   searchNYT(e) {
+    let {topic, startDate, endDate} = this.state;
+    let sDate = "";
+    let eDate = "";
     e.preventDefault();
-    axios
-      .get("https://api.nytimes.com/svc/search/v2/articlesearch.json", {
-        params: {
-          "api-key": API_KEY,
-          q: "water",
-          begin_date: "20150101",
-          end_date: "20170101"
-        }
-      })
-      .then(response => {
-        console.log(response.data.response.docs);        
-        let articles = response.data.response.docs.map(article => {
-          let obj = {};
-          obj.id = article._id;
-          obj.title = article.snippet;
-          obj.date = article.pub_date;
-          obj.link = article.web_url;
-          return obj;
-        });
-        this.props.searchResults(articles);
-        console.log(articles);
-      })
-      .catch(err => console.log(err));
+
+    /**
+     * remove this
+     */
+    topic = topic || "water";
+    /**
+     * remove above line
+     */
+    
+    let apiParams = {
+      "api-key": API_KEY,
+      q: ( topic )
+    }
+
+    if (startDate && endDate ) {
+      sDate = startDate.replace(/-/g, '');
+      // console.log("startDate", sDate);
+      eDate = endDate.replace(/-/g, '');
+      // console.log("endDate", eDate);
+      apiParams.begin_date = sDate;
+      apiParams.end_date = eDate;
+    }
+
+    if (topic && topic != "") {
+      axios
+        .get("https://api.nytimes.com/svc/search/v2/articlesearch.json", {
+          params: apiParams
+        })
+        .then(response => {
+          // console.log(response.data.response.docs);
+          let articles = response.data.response.docs.map(article => {
+            let obj = {};
+            obj.id = article._id;
+            obj.title = article.snippet;
+            obj.date = article.pub_date;
+            obj.link = article.web_url;
+            return obj;
+          });
+          this.props.searchResults(articles);
+          console.log(articles);
+        })
+        .catch(err => console.log(err));
+    } else {
+      alert("Enter topic to search");
+    }
   }
 
   render() {
-    let { topic, startYear, endYear } = this.state;
+    let { topic, startDate, endDate } = this.state;
     return (
       <div className="container-fluid  text-center">
         <Panel header="Search" bsStyle="info">
@@ -83,20 +106,20 @@ class Search extends Component {
               />
               <FieldGroup
                 className="text-center"
-                name="startYear"
-                type="text"
-                label="Start Year"
-                placeholder="Enter start year"
-                value={startYear}
+                name="startDate"
+                type="date"
+                label="Start Date"
+                placeholder="Enter start date"
+                value={startDate}
                 onChange={this.handleValueChange}
               />
               <FieldGroup
                 className="text-center"
-                name="endYear"
-                type="text"
-                label="End Year"
-                placeholder="Enter end year"
-                value={endYear}
+                name="endDate"
+                type="date"
+                label="End Date"
+                placeholder="Enter end date"
+                value={endDate}
                 onChange={this.handleValueChange}
               />
               <Button
