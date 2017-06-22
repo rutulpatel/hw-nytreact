@@ -50,6 +50,19 @@ class App extends Component {
       });
   };
 
+  deleteSavedArticle = (article_id) => {
+    axios
+      .delete("/api/saved", {data: {id: article_id}})
+      .then( response => {
+        console.log(response);
+        this.pullSavedArticles().bind(this);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+
+  }
+
   componentDidMount = () => {
     this.pullSavedArticles();
   }
@@ -69,7 +82,7 @@ class App extends Component {
           searchResults={this.state.searchResults}
           selectedArticle={this.saveArticle}
         />
-        <SavedArticles savedArticles={this.state.savedArticles} />
+        <SavedArticles savedArticles={this.state.savedArticles} removeArticle={this.deleteSavedArticle} />
       </div>
     );
   }
