@@ -19,12 +19,6 @@ class App extends Component {
     this.setState({ searchResults: articles });
   };
 
-  handleRequest = () => {
-    axios.get("/api").then(response => {
-      console.log(response.data);
-    });
-  };
-
   saveArticle = articleObj => {
     axios
       .post("/api/saved", articleObj)
@@ -70,7 +64,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <button onClick={this.handleRequest}>Test</button>
         <div className="page-header text-center">
           <h1 className="text-underline">
             <u>New York Time Article Scrubber</u>
