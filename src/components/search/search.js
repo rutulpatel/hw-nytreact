@@ -43,9 +43,9 @@ class Search extends Component {
     e.preventDefault();
 
     /**
-     * remove this
+     * remove this; its only for testing
      */
-    topic = topic || "water";
+    // topic = topic || "water";
     /**
      * remove above line
      */
