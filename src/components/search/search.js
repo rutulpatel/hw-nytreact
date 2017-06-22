@@ -75,7 +75,7 @@ class Search extends Component {
             let obj = {};
             obj.nytid = article._id;
             obj.title = article.snippet;
-            obj.date = article.pub_date;
+            // obj.date = article.pub_date;
             obj.link = article.web_url;
             return obj;
           });
