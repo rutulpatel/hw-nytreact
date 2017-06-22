@@ -6,6 +6,19 @@ import Search from './components/search/search';
 
 
 class App extends Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      searchResults: []
+    }
+  }
+
+  saveSearchResults = (articles) => {
+    this.setState({searchResults: articles});
+  }
+
   render() {
     return (
       <div className="App">
@@ -15,9 +28,8 @@ class App extends Component {
           </h1>
           <h4>Search articles and saved the ones that interests you.</h4>
         </div>
-
-        <Search />
-        <Results />
+        <Search searchResults={this.saveSearchResults} />
+        <Results searchResults={this.state.searchResults} />
         <SavedArticles />
       </div>
     );

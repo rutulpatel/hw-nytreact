@@ -24,49 +24,49 @@ function FieldGroup({ id, label, help, ...props }) {
 class Search extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
-      topic: '',
-      startYear: '',
-      endYear: ''
-    }
+      topic: "",
+      startYear: "",
+      endYear: ""
+    };
   }
 
-  handleValueChange = (e) => {
-  
-    this.setState({[e.target.name]: e.target.value}, () => {
+  handleValueChange = e => {
+    this.setState({ [e.target.name]: e.target.value }, () => {
       console.log(this.state);
     });
-
-  }
+  };
 
   searchNYT(e) {
     e.preventDefault();
-    axios.get(
-      "https://api.nytimes.com/svc/search/v2/articlesearch.json",
-        {params: {
+    axios
+      .get("https://api.nytimes.com/svc/search/v2/articlesearch.json", {
+        params: {
           "api-key": API_KEY,
           q: "water",
           begin_date: "20150101",
           end_date: "20170101"
         }
-      }).then((response)=> {
-          console.log(response.data.response.docs);
-          let articles = response.data.response.docs.map((article) => {
-            let obj = {};
-            obj.id = article._id;
-            obj.title = article.abstract;
-            obj.date = article.pub_date;
-            obj.link = article.web_url;
-            return obj;
-          });
-          // this.props.searchResults = response.data.response.docs;
-          console.log(articles);
       })
-      .catch(err => console.log(err))
+      .then(response => {
+        console.log(response.data.response.docs);        
+        let articles = response.data.response.docs.map(article => {
+          let obj = {};
+          obj.id = article._id;
+          obj.title = article.snippet;
+          obj.date = article.pub_date;
+          obj.link = article.web_url;
+          return obj;
+        });
+        this.props.searchResults(articles);
+        console.log(articles);
+      })
+      .catch(err => console.log(err));
   }
 
   render() {
-    let {topic, startYear, endYear} = this.state;
+    let { topic, startYear, endYear } = this.state;
     return (
       <div className="container-fluid  text-center">
         <Panel header="Search" bsStyle="info">
@@ -102,7 +102,7 @@ class Search extends Component {
               <Button
                 type="submit"
                 bsSize="large"
-                onClick={this.searchNYT}
+                onClick={this.searchNYT.bind(this)}
               >
                 Search
               </Button>
