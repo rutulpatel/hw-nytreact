@@ -73,7 +73,7 @@ class Search extends Component {
           // console.log(response.data.response.docs);
           let articles = response.data.response.docs.map(article => {
             let obj = {};
-            obj.id = article._id;
+            obj.nytid = article._id;
             obj.title = article.snippet;
             obj.date = article.pub_date;
             obj.link = article.web_url;

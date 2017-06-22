@@ -1,30 +1,39 @@
 import React, { Component } from "react";
 import "react-bootstrap";
-import Results from './components/results/results';
-import SavedArticles from './components/savedArticles/savedArticles';
-import Search from './components/search/search';
-import axios from 'axios';
-
+import Results from "./components/results/results";
+import SavedArticles from "./components/savedArticles/savedArticles";
+import Search from "./components/search/search";
+import axios from "axios";
 
 class App extends Component {
-
   constructor(props) {
     super(props);
 
     this.state = {
       searchResults: []
-    }
+    };
   }
 
-  saveSearchResults = (articles) => {
-    this.setState({searchResults: articles});
-  }
+  saveSearchResults = articles => {
+    this.setState({ searchResults: articles });
+  };
 
   handleRequest = () => {
-    axios.get('/api').then((response)=>{
+    axios.get("/api").then(response => {
       console.log(response.data);
-    })
-  }
+    });
+  };
+
+  saveArticle = articleObj => {
+    axios
+      .post("/saved", articleObj)
+      .then((response) => {
+        console.log(response);
+      })
+      .catch(err => {
+        console.log(err);
+      });
+  };
 
   render() {
     return (
@@ -37,7 +46,7 @@ class App extends Component {
           <h4>Search articles and saved the ones that interests you.</h4>
         </div>
         <Search searchResults={this.saveSearchResults} />
-        <Results searchResults={this.state.searchResults} />
+        <Results searchResults={this.state.searchResults} selectedArticle={this.saveArticle} />
         <SavedArticles />
       </div>
     );
