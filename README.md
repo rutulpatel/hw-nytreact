@@ -21,3 +21,9 @@ https://thawing-beach-29217.herokuapp.com/
 
 
  # App Gifs
+ ## Search & save articles 
+ ![Search & save articles](searcharticles.gif)
+
+ ## Remove saved articles
+ ![Remove saved articles](remove_saved_article.gif)
+ 
