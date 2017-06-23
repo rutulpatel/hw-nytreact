@@ -1,16 +1,16 @@
 import React, { Component } from "react";
 import { Panel, Col, Button } from "react-bootstrap";
-import moment from 'moment';
+import moment from "moment";
 
 class SavedArticles extends Component {
   constructor(props) {
     super(props);
   }
 
-  removeArticle = (article_id) => {
+  removeArticle = article_id => {
     console.log(article_id);
     this.props.removeArticle(article_id);
-  }
+  };
 
   renderArticles = () => {
     console.log(this.props.savedArticles);
@@ -19,8 +19,11 @@ class SavedArticles extends Component {
         return (
           <Panel key={article._id} className="show-grid text-left">
             <Col xs={10} bsSize="small">
-              {article.title}
-              <h6 className="text-warning">Saved on: {new moment(article.date).format('MMMM Do YYYY, h:mm:ss a')}</h6>
+              <a href={article.link} target="_blank">{article.title}</a>
+              <h6 className="text-warning">
+                Saved on:{" "}
+                {new moment(article.date).format("MMMM Do YYYY, h:mm:ss a")}
+              </h6>
             </Col>
             <Col xs={2} bsSize="small">
               <Button
