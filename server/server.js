@@ -22,7 +22,9 @@ mongoose.Promise = Promise;
 var Article = require("./models/Article.js");
 var Note = require("./models/Note.js");
 
-mongoose.connect("mongodb://localhost/nytreact");
+//mongoose.connect("mongodb://localhost/nytreact");
+mongoose.connect("mongodb://admin:herokuadmin@ds135382.mlab.com:35382/heroku_7vxc8ppq");
+
 var db = mongoose.connection;
 
 db.on("error", function(err) {
