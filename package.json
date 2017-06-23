@@ -18,7 +18,7 @@
     "react-scripts": "1.0.7"
   },
   "scripts": {
-    "start": "node server/server.js",
+    "start": "react-scripts build; node server/server.js",
     "dev-api": "nodemon --watch server server/server.js",
     "dev-ui": "react-scripts start",
     "build": "react-scripts build",
